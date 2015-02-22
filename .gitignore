@@ -26,6 +26,7 @@
 *.sql
 *.sqlite
 *.tlog
+*.ipch
 
 #files inside debug folder
 ###########################
