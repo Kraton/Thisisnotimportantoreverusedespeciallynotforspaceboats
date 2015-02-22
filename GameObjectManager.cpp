@@ -74,4 +74,11 @@ void GameObjectManager::UpdateAll()
 		itr->second->Update(timeDelta);
 		itr++;
 	}
+	
 }
+
+void GameObjectManager::PressEnterToContinue()
+  {
+  std::cout << "Press ENTER to continue... ";
+  std::cin.ignore( std::numeric_limits <std::streamsize> ::max(), '\n' );
+  }

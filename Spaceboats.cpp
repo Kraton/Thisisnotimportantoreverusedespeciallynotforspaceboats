@@ -7,7 +7,6 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	printf("here1");
 	Game::Start();
 	return 0;
 }

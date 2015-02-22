@@ -1,10 +1,11 @@
 #pragma once
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
-#include "PlayerPaddle.h"
+#include "PlayerShip.h"
 #include "GameObjectManager.h"
 #include "stdafx.h"
 #include "GameBall.h"
+
 class Game
 {
 

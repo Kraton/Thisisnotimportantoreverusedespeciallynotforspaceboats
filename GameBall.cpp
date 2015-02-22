@@ -61,7 +61,7 @@ void GameBall::Update(float elapsedTime)
 
 	for (std::vector<std::string>::iterator itr = vector.begin(); itr != vector.end(); ++itr)
 	{
-		PlayerPaddle * player1= dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get(*itr));
+		PlayerShip * player1= dynamic_cast<PlayerShip*>(Game::GetGameObjectManager().Get(*itr));
 		if(player1 != NULL)
 		{
 			sf::Rect<float> p1BoundaryBox = player1->GetBoundingRect();
@@ -104,7 +104,8 @@ void GameBall::Update(float elapsedTime)
 		}
 
 	}
-	if(GetPosition().y - GetHeight()/2 <=0 +edge_gap|| GetPosition().y + GetHeight()/2 + moveByY >= Game::window_y_resolution - edge_gap)
+	if(GetPosition().y - GetHeight()/2 + moveByY <=0 +edge_gap|| 
+		GetPosition().y + GetHeight()/2 + moveByY >= Game::window_y_resolution - edge_gap)
 	{
 		_angle = 180- _angle;
 		moveByY = -moveByY;
@@ -121,18 +122,4 @@ void GameBall::Update(float elapsedTime)
 
 	GetSprite().Move(moveByX, moveByY);
 	
-}
-
-float GameBall::LinearVelocityX(float angle)
-{
-  angle -= 90;
-    if (angle < 0) angle = 360 + angle;
-    return (float)std::cos( angle * ( 3.1415926 / 180.0f ));
-}
-
-float GameBall::LinearVelocityY(float angle)
-{
-  angle -= 90;
-    if (angle < 0) angle = 360 + angle;
-    return (float)std::sin( angle * ( 3.1415926 / 180.0f ));
 }

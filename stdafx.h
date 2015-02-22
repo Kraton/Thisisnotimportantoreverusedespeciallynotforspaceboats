@@ -10,7 +10,10 @@
 #include <stdio.h>
 #include <tchar.h>
 #include "Defines.h"
-
+#include <iostream>
+#include <limits>
+#include <ctime>
+#include <stdlib.h>
 
 
 // TODO: reference additional headers your program requires here
@@ -23,3 +26,5 @@
 #include <list>
 #include <assert.h>
 #include <vector>
+
+

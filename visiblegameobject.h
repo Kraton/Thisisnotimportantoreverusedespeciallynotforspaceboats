@@ -17,6 +17,9 @@ public:
 
 	virtual sf::Vector2f GetPosition() const;
 	virtual sf::Rect<float> GetBoundingRect() const;
+	float LinearVelocityX(float angle);
+	float LinearVelocityY(float angle);
+
 
 protected:
 	sf::Sprite& GetSprite();
@@ -26,4 +29,5 @@ private:
 	sf::Image _image;
 	std::string _filename;
 	bool _isLoaded;
+
 };

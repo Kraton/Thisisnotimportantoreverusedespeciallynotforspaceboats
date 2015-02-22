@@ -9,11 +9,9 @@ void Game::Start(void)
 {
 	if(_gameState !=Uninitialized)
 		return;
-	printf("here2");
 	_mainWindow.Create(sf::VideoMode(window_x_resolution,window_y_resolution,bpp_colour),"Spaceboats!");
 
-	printf("here3");
-	PlayerPaddle *player1 = new PlayerPaddle();
+	PlayerShip *player1 = new PlayerShip();
 	GameBall *Ball1 = new GameBall();
 	GameBall *Ball2 = new GameBall();
 	GameBall *Ball3 = new GameBall();
@@ -112,7 +110,7 @@ void Game::GameLoop(sf::Sprite _background_image)
 		}
 	case Game::Playing:
 		{
-
+			clock_t begin = clock();
 			_mainWindow.Draw(_background_image);
 			
 		
@@ -120,7 +118,7 @@ void Game::GameLoop(sf::Sprite _background_image)
 			_gameObjectManager.DrawAll(_mainWindow);
 
 			_mainWindow.Display();
-
+			
 			if(currentEvent.Type == sf::Event::Closed)
 			{
 				_gameState = Game::Exiting;
@@ -131,9 +129,11 @@ void Game::GameLoop(sf::Sprite _background_image)
 				if(currentEvent.Key.Code == sf::Key::Escape) ShowMenu();
 			}
 			break;
+
 		}
 	}
 }
+
 
 void Game::ShowSplashScreen()
 {

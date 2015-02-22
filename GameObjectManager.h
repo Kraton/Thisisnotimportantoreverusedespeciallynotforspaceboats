@@ -16,6 +16,7 @@ public:
 
 	void DrawAll(sf::RenderWindow& renderWindow);
 	void UpdateAll();
+	void PressEnterToContinue();
 
 private:
 	std::map<std::string, VisibleGameObject*> _gameObjects;
