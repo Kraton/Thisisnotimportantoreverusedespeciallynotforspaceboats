@@ -26,3 +26,7 @@
 *.sql
 *.sqlite
 *.tlog
+
+#files inside debug folder
+###########################
+Debug/*.*
