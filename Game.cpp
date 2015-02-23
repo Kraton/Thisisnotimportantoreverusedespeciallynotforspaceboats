@@ -110,11 +110,18 @@ void Game::GameLoop(sf::Sprite _background_image)
 		}
 	case Game::Playing:
 		{
-			clock_t begin = clock();
+			DWORD begin =GetTickCount();
+			//printf("clock time is %d",begin);
 			_mainWindow.Draw(_background_image);
 			
 		
 			_gameObjectManager.UpdateAll();
+
+
+			while (begin +(1000/desired_fps) > GetTickCount()){
+				printf("sleeping");
+			Sleep(1);
+			}
 			_gameObjectManager.DrawAll(_mainWindow);
 
 			_mainWindow.Display();

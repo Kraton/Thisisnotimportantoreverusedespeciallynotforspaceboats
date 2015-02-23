@@ -49,7 +49,8 @@ void GameBall::Update(float elapsedTime)
 	if(GetPosition().x + moveByX <= 0 +GetWidth()/2 + edge_gap|| 
 		GetPosition().x + GetWidth()/2 + moveByX >= Game::window_x_resolution - edge_gap) 
 	{
-		_angle = 360.0f -_angle;
+		_angle = _angle +180 +sf::Randomizer::Random(-45,45);
+		if(_angle > 360.f) _angle -= 360.0f;
 		if(_angle > 260.0f && _angle < 280.0f) _angle += 20.f;
 		if(_angle > 80.0f && _angle < 100.0f) _angle += 20.f;
 		moveByX = -moveByX;
@@ -68,16 +69,51 @@ void GameBall::Update(float elapsedTime)
 		
 			if(p1BoundaryBox.Intersects(GetBoundingRect()))
 			{
-				_angle = 360.0f - (_angle - 180.0f);
+				_angle = _angle +180 +sf::Randomizer::Random(-45,45);
 				if(_angle > 360.f) _angle -= 360.0f;
 
+				//GetSprite().Move(LinearVelocityX(_angle) *GetWidth()/2 ,LinearVelocityY(_angle) *GetHeight()/2 );
 				moveByY = -moveByY;
+				moveByX = -moveByX;
 
-				//make sure ball isnt inside paddle
-				if(GetBoundingRect().Bottom > player1->GetBoundingRect().Top)
+				//make sure ball hasnt passed inside right of player1
+				if(GetBoundingRect().Top > player1->GetBoundingRect().Top &
+					GetBoundingRect().Right > player1->GetBoundingRect().Right &
+					GetBoundingRect().Bottom < player1->GetBoundingRect().Bottom &
+					GetBoundingRect().Left > player1->GetBoundingRect().Left)
 				{
-					SetPosition(GetPosition().x,player1->GetBoundingRect().Top - GetWidth()/2 -1 );
+					SetPosition(player1->GetBoundingRect().Right + GetWidth()/2 +1, GetPosition().y );
+					printf("inside right");
 				}
+				//make sure ball hasnt passed inside left of player1
+				else if(GetBoundingRect().Top > player1->GetBoundingRect().Top &
+					GetBoundingRect().Right < player1->GetBoundingRect().Right &
+					GetBoundingRect().Bottom < player1->GetBoundingRect().Bottom &
+					GetBoundingRect().Left < player1->GetBoundingRect().Left)
+				{
+					SetPosition(player1->GetBoundingRect().Left - GetWidth()/2 -1,GetPosition().y );
+					printf("inside left");
+				}
+				//make sure ball hasnt passed inside top of player1
+				else if(GetBoundingRect().Top < player1->GetBoundingRect().Top &
+					GetBoundingRect().Right < player1->GetBoundingRect().Right &
+					GetBoundingRect().Bottom < player1->GetBoundingRect().Bottom &
+					GetBoundingRect().Left > player1->GetBoundingRect().Left)
+				{
+					SetPosition(GetPosition().x,player1->GetBoundingRect().Top - GetHeight()/2 -1 );
+					printf("inside top");
+				}
+				//make sure ball hasnt passed inside bottom of player1
+				else if(GetBoundingRect().Top > player1->GetBoundingRect().Top &
+					GetBoundingRect().Right < player1->GetBoundingRect().Right &
+					GetBoundingRect().Bottom > player1->GetBoundingRect().Bottom &
+					GetBoundingRect().Left > player1->GetBoundingRect().Left)
+				{
+					SetPosition(GetPosition().x,player1->GetBoundingRect().Bottom + GetHeight()/2 +1 );
+					printf("inside bottom");
+				}
+
+
 			}
 		}
 		GameBall * ball= dynamic_cast<GameBall*>(Game::GetGameObjectManager().Get(*itr));
@@ -88,7 +124,7 @@ void GameBall::Update(float elapsedTime)
 				sf::Rect<float> ballBoundaryBox = ball->GetBoundingRect();
 				if(ballBoundaryBox.Intersects(GetBoundingRect()))
 				{
-					_angle = 360.0f - (_angle - 180.0f);
+					_angle = _angle +180 +sf::Randomizer::Random(-45,45);
 					if(_angle > 360.f) _angle -= 360.0f;
 					_velocity += sf::Randomizer::Random(-10,10);
 

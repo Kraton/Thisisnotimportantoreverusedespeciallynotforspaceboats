@@ -4,6 +4,8 @@
 #define splash_image "images/SplashScreen.png"
 #define background_image "images/deepspacewallpaper.png"
 #define main_menu_image "images/menu.png"
+#define player_ship_image "images/Ship_shield.png"
+#define desired_fps 60
 
 //grid info settings
 
