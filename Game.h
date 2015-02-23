@@ -5,6 +5,7 @@
 #include "GameObjectManager.h"
 #include "stdafx.h"
 #include "GameBall.h"
+#include "AIShip.h"
 
 class Game
 {

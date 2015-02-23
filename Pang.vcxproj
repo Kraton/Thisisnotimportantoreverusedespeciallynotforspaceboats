@@ -79,6 +79,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIShip.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBall.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="visiblegameobject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIShip.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameBall.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />

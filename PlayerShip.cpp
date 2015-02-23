@@ -6,7 +6,7 @@
 PlayerShip::PlayerShip() : 
 _velocity(0),
 _maxVelocity(600.0f),
-_angle(0)
+_angle(0) //0 is up
 {
 	Load(player_ship_image);
 	assert(IsLoaded());

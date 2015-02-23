@@ -12,6 +12,7 @@ void Game::Start(void)
 	_mainWindow.Create(sf::VideoMode(window_x_resolution,window_y_resolution,bpp_colour),"Spaceboats!");
 
 	PlayerShip *player1 = new PlayerShip();
+	AIShip *AI1 = new AIShip();
 	GameBall *Ball1 = new GameBall();
 	GameBall *Ball2 = new GameBall();
 	GameBall *Ball3 = new GameBall();
@@ -35,9 +36,11 @@ void Game::Start(void)
 	Ball8->SetPosition(starting_ball_loc_8);
 	Ball9->SetPosition(starting_ball_loc_9);
 	Ball10->SetPosition(starting_ball_loc_10);
-	player1->SetPosition(starting_paddle_loc);
+	player1->SetPosition(starting_player_loc);
+	AI1->SetPosition(starting_AI_loc);
 
-	_gameObjectManager.Add("Paddle1", player1);
+	_gameObjectManager.Add("Ship1", player1);
+	_gameObjectManager.Add("AI1", AI1);
 	_gameObjectManager.Add("ball1", Ball1);
 	_gameObjectManager.Add("ball2", Ball2);
 	_gameObjectManager.Add("ball3", Ball3);
@@ -119,7 +122,6 @@ void Game::GameLoop(sf::Sprite _background_image)
 
 
 			while (begin +(1000/desired_fps) > GetTickCount()){
-				printf("sleeping");
 			Sleep(1);
 			}
 			_gameObjectManager.DrawAll(_mainWindow);

@@ -116,6 +116,7 @@ void GameBall::Update(float elapsedTime)
 
 			}
 		}
+
 		GameBall * ball= dynamic_cast<GameBall*>(Game::GetGameObjectManager().Get(*itr));
 		if(ball != NULL)
 		{
