@@ -49,6 +49,7 @@ void PlayerShip::Update(float elapsedTime)
 	if(Game::GetInput().IsKeyDown(sf::Key::Right))
 	{
 		_angle += desired_turning_speed_per_second*elapsedTime;
+		//rotate angle is inverse to other angles
 		GetSprite().Rotate(-desired_turning_speed_per_second*elapsedTime);
 		//++moves;
 	}

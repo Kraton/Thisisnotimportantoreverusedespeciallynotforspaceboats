@@ -91,28 +91,56 @@ void AIShip::Update(float elapsedTime)
 				angle_to_player = 90 - (atan((std::abs(AIy-playery))/std::abs(AIx - playerx)))* 180/pi_value; //90 to accomdate for angle defaults
 				//printf("pure angle to player is%f \n", angle_to_player);
 				angle_to_player = (180 - angle_to_player);
-				//printf("modified angle to player is%f \n", angle_to_player);
+				//printf("modified angle to player is %f \n", angle_to_player);
 			}
 
+			float angle_to_fly = 0;
+			float rotate_angle= 0;
+			float ideal_rotate_angle=0;
+//			if (angle_to_player > 0.0f)
+//			{
+			ideal_rotate_angle= angle_to_player-_angle;
+			if (ideal_rotate_angle <-180){
+			ideal_rotate_angle +=360;
+			}
+			//}
+			//else if(angle_to_player <= 0.0f)
+			//{
+			//	printf("in <=0 area");
+			//ideal_rotate_angle= angle_to_player+_angle;
+			//}
 
-			float linVelX = LinearVelocityX(angle_to_player);
-			float linVelY = LinearVelocityY(angle_to_player);
+
+			if (ideal_rotate_angle > (desired_turning_speed_per_second*elapsedTime))
+			{
+				rotate_angle = (desired_turning_speed_per_second*elapsedTime);
+			}
+			else if (ideal_rotate_angle < -(desired_turning_speed_per_second*elapsedTime))
+			{
+				rotate_angle = -(desired_turning_speed_per_second*elapsedTime);
+			}
+			else {
+				rotate_angle = ideal_rotate_angle;
+			}
+
+			angle_to_fly = _angle + rotate_angle;
+
+			float linVelX = LinearVelocityX(angle_to_fly);
+			float linVelY = LinearVelocityY(angle_to_fly);
 
 			moveByX = linVelX * moveAmount ;
 			moveByY = linVelY * moveAmount ;
-
 
 			if(p1BoundaryBox.Intersects(GetBoundingRect()))
 			{
 				SetPosition(starting_AI_loc);
 				printf(" got you ");
 			}
-			float rotate_angle= _angle-angle_to_player;
-			//printf("rotate angle is %f \n", rotate_angle);
 			//printf("angle is %f \n", _angle);
-			GetSprite().Rotate(rotate_angle);
+			//rotate angle is inverse to all other angles
+			GetSprite().Rotate(-rotate_angle);
 
-			_angle=angle_to_player;
+			_angle=angle_to_fly;
 
 		}
 	}
