@@ -39,18 +39,18 @@ void Game::Start(void)
 	player1->SetPosition(starting_player_loc);
 	AI1->SetPosition(starting_AI_loc);
 
-	_gameObjectManager.Add("Ship1", player1);
-	_gameObjectManager.Add("AI1", AI1);
-	_gameObjectManager.Add("ball1", Ball1);
-	_gameObjectManager.Add("ball2", Ball2);
-	_gameObjectManager.Add("ball3", Ball3);
-	_gameObjectManager.Add("ball4", Ball4);
-	_gameObjectManager.Add("ball5", Ball5);
-	_gameObjectManager.Add("ball6", Ball6);
-	_gameObjectManager.Add("ball7", Ball7);
-	_gameObjectManager.Add("ball8", Ball8);
-	_gameObjectManager.Add("ball9", Ball9);
-	_gameObjectManager.Add("ball10", Ball10);
+	_gameObjectManager.Add("1", player1);
+	_gameObjectManager.Add("1001", AI1);
+	_gameObjectManager.Add("2001", Ball1);
+	_gameObjectManager.Add("2002", Ball2);
+	_gameObjectManager.Add("2003", Ball3);
+	_gameObjectManager.Add("2004", Ball4);
+	_gameObjectManager.Add("2005", Ball5);
+	_gameObjectManager.Add("2006", Ball6);
+	_gameObjectManager.Add("2007", Ball7);
+	_gameObjectManager.Add("2008", Ball8);
+	_gameObjectManager.Add("2009", Ball9);
+	_gameObjectManager.Add("2010", Ball10);
 	_gameState = Game::ShowingSplash;
 
 	sf::Image image;
@@ -116,11 +116,41 @@ void Game::GameLoop(sf::Sprite _background_image)
 			DWORD begin =GetTickCount();
 			//printf("clock time is %d",begin);
 			_mainWindow.Draw(_background_image);
+			switch(_currentActiveParty)
+			{
+			case Game::Player1:
+				{
+
+			_gameObjectManager.UpdateGroup(player1_objects_lower_bound, player1_objects_upper_bound);
+			if(currentEvent.Type == sf::Event::KeyPressed)
+			{
+				if(currentEvent.Key.Code == sf::Key::Space)
+				{
+					_currentActiveParty = Game::AI;
+				}
+			}	
+			break;
+				}
+			case Game::AI:
+				{
+			_gameObjectManager.UpdateGroup(AI_objects_lower_bound, AI_objects_upper_bound);
+			if(currentEvent.Key.Code == sf::Key::PageUp)
+				{
+					_currentActiveParty = Game::Env;
+				}	
 			
-		
-			_gameObjectManager.UpdateAll();
-
-
+			break;
+				}
+			case Game::Env:
+				{
+			_gameObjectManager.UpdateGroup(env_objects_lower_bound, env_objects_upper_bound);
+			if(currentEvent.Key.Code == sf::Key::PageDown)
+				{
+					_currentActiveParty = Game::Player1;
+				}	
+			break;
+				}
+			}
 			while (begin +(1000/desired_fps) > GetTickCount()){
 			Sleep(1);
 			}
@@ -162,10 +192,12 @@ void Game::ShowMenu()
 		break;
 	case MainMenu::Play:
 		_gameState = Game::Playing;
+		_currentActiveParty = Game::Player1;
 		break;
 	}
 }
 
 Game::GameState Game::_gameState = Uninitialized;
+Game::ActiveParty Game::_currentActiveParty = NotStarted;
 sf::RenderWindow Game::_mainWindow;
 GameObjectManager Game::_gameObjectManager;

@@ -11,6 +11,12 @@
 
 //fixed values
 #define pi_value 3.1415926
+#define player1_objects_lower_bound 0
+#define player1_objects_upper_bound 1000
+#define AI_objects_lower_bound 1000
+#define AI_objects_upper_bound 2000
+#define env_objects_lower_bound 2000
+#define env_objects_upper_bound 3000
 
 //grid info settings
 

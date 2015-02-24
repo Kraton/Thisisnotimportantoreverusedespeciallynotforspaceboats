@@ -77,6 +77,38 @@ void GameObjectManager::UpdateAll()
 	
 }
 
+
+void GameObjectManager::DrawGroup(sf::RenderWindow& renderWindow, int lowerGroupBound, int upperGroupBound)
+{
+	std::map<std::string, VisibleGameObject*>::const_iterator itr = _gameObjects.begin();
+	while(itr != _gameObjects.end())
+	{
+		int ID = atoi(itr->first.c_str());
+		if (ID >= lowerGroupBound & ID < upperGroupBound){
+			itr->second->Draw(renderWindow);
+			
+		}
+		itr++;
+	}
+}
+
+void GameObjectManager::UpdateGroup(int lowerGroupBound, int upperGroupBound)
+{
+	std::map<std::string, VisibleGameObject*>::const_iterator itr = _gameObjects.begin();
+	float timeDelta = Game::GetWindow().GetFrameTime();
+
+	while(itr != _gameObjects.end())
+	{
+		int ID = atoi(itr->first.c_str());
+		if (ID >= lowerGroupBound & ID < upperGroupBound){
+			itr->second->Update(timeDelta);
+			
+		}
+		itr++;
+	}
+	
+}
+
 void GameObjectManager::PressEnterToContinue()
   {
   std::cout << "Press ENTER to continue... ";

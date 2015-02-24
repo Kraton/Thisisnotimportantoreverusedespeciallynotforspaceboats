@@ -30,8 +30,10 @@ private:
 
 	enum GameState { Uninitialized, ShowingSplash, Paused, 
 		ShowingMenu, Playing, Exiting };
+	enum ActiveParty { NotStarted, Player1, AI, Env};
 
 	static GameState _gameState;
+	static ActiveParty _currentActiveParty;
 	static sf::RenderWindow _mainWindow;
 
 	static GameObjectManager _gameObjectManager;
