@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "visiblegameobject.h"
 
-VisibleGameObject::VisibleGameObject()
+VisibleGameObject::VisibleGameObject() :
+_moves(0)
 {
 	_isLoaded = false;
 }

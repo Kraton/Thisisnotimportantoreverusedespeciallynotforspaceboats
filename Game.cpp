@@ -127,6 +127,7 @@ void Game::GameLoop(sf::Sprite _background_image)
 				if(currentEvent.Key.Code == sf::Key::Space)
 				{
 					_currentActiveParty = Game::AI;
+					_gameObjectManager.ResetAllMoves();
 				}
 			}	
 			break;
@@ -137,6 +138,7 @@ void Game::GameLoop(sf::Sprite _background_image)
 			if(currentEvent.Key.Code == sf::Key::PageUp)
 				{
 					_currentActiveParty = Game::Env;
+					_gameObjectManager.ResetAllMoves();
 				}	
 			
 			break;
@@ -147,6 +149,8 @@ void Game::GameLoop(sf::Sprite _background_image)
 			if(currentEvent.Key.Code == sf::Key::PageDown)
 				{
 					_currentActiveParty = Game::Player1;
+					_gameObjectManager.ResetAllMoves();
+					
 				}	
 			break;
 				}

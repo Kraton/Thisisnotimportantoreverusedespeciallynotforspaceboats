@@ -6,7 +6,9 @@
 PlayerShip::PlayerShip() : 
 _velocity(0),
 _maxVelocity(600.0f),
-_angle(0) //0 is up
+_angle(0), //0 is up
+_maxMoves(6),
+_turningspeed(22.5)
 {
 	Load(player_ship_image);
 	assert(IsLoaded());
@@ -30,40 +32,43 @@ float PlayerShip::GetVelocity() const
 }
 void PlayerShip::Update(float elapsedTime)
 {
-	int moves = 1;
+	printf("moves made is %i",_moves);
 	int turn = 0;
-	int desired_turning_speed_per_second = 90;
+	float moveAmount = 0;
 
-	//while(moves <6){
+	if(_moves <_maxMoves){
 
 	if(Game::GetInput().IsKeyDown(sf::Key::Up))
 	{
-		_velocity+=3.0f;
-		//++moves;
+		moveAmount =30.0f;
+		_moves++;
+		Sleep(500);
 	}
 	if(Game::GetInput().IsKeyDown(sf::Key::Down))
 	{
-		_velocity-=3.0f;
-		//++moves;
+		//_velocity-=3.0f;
+		//++_moves;
 	}
 	if(Game::GetInput().IsKeyDown(sf::Key::Right))
 	{
-		_angle += desired_turning_speed_per_second*elapsedTime;
+		_angle += _turningspeed;
 		//rotate angle is inverse to other angles
-		GetSprite().Rotate(-desired_turning_speed_per_second*elapsedTime);
-		//++moves;
+		GetSprite().Rotate(-_turningspeed);
+		_moves++;
+		Sleep(500);
 	}
 	if(Game::GetInput().IsKeyDown(sf::Key::Left))
 	{
-		_angle -= desired_turning_speed_per_second*elapsedTime;
-		GetSprite().Rotate(desired_turning_speed_per_second*elapsedTime);
-		//++moves;
+		_angle -= _turningspeed;
+		GetSprite().Rotate(_turningspeed);
+		_moves++;
+		Sleep(500);
 	}
-	//}
-	if(_velocity > _maxVelocity)
-		_velocity = _maxVelocity;
-	if(_velocity < 0)
-		_velocity = 0;
+	}
+	//if(_velocity > _maxVelocity)
+	//	_velocity = _maxVelocity;
+	//if(_velocity < 0)
+	//	_velocity = 0;
 	if(_angle > 360.f) _angle -= 360.0f;
 
 	sf::Vector2f pos = this->GetPosition();
@@ -74,7 +79,7 @@ void PlayerShip::Update(float elapsedTime)
 	//	_velocity = -_velocity; //bounce in opposite direction
 	//}
 
-	float moveAmount = _velocity * elapsedTime;
+//	float moveAmount = _velocity * elapsedTime;
 
 	float moveByX = LinearVelocityX(_angle) * moveAmount;
 	float moveByY = LinearVelocityY(_angle) * moveAmount;

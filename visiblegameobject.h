@@ -19,6 +19,7 @@ public:
 	virtual sf::Rect<float> GetBoundingRect() const;
 	float LinearVelocityX(float angle);
 	float LinearVelocityY(float angle);
+	int _moves;
 
 
 protected:

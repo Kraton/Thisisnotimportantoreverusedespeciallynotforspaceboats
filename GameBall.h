@@ -12,5 +12,6 @@ private:
 	float _velocity;
 	float _angle;
 	float _elapsedTimeSinceStart;
+	int _maxMoves;
 
 };

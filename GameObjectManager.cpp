@@ -109,6 +109,20 @@ void GameObjectManager::UpdateGroup(int lowerGroupBound, int upperGroupBound)
 	
 }
 
+void GameObjectManager::ResetAllMoves()
+{
+	std::map<std::string, VisibleGameObject*>::const_iterator itr = _gameObjects.begin();
+	float timeDelta = Game::GetWindow().GetFrameTime();
+
+	while(itr != _gameObjects.end())
+	{
+		itr->second->_moves=0;
+		itr++;
+	}
+	
+}
+
+
 void GameObjectManager::PressEnterToContinue()
   {
   std::cout << "Press ENTER to continue... ";

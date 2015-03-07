@@ -24,10 +24,6 @@ void GameBall::Update(float elapsedTime)
 {
 	_elapsedTimeSinceStart += elapsedTime;
 
-	//Delay start time by 3 seconds
-	if(_elapsedTimeSinceStart <3.0f)
-		return;
-
 	float moveAmount = _velocity * elapsedTime;
 
 	float moveByX = LinearVelocityX(_angle) * moveAmount;

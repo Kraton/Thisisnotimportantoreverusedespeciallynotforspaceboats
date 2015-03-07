@@ -16,6 +16,7 @@ public:
 
 	void DrawAll(sf::RenderWindow& renderWindow);
 	void UpdateAll();
+	void ResetAllMoves();
 
 	void DrawGroup(sf::RenderWindow& renderWindow, int lowerGroupBound, int upperGroupBound);
 	void UpdateGroup(int lowerGroupBound, int upperGroupBound);

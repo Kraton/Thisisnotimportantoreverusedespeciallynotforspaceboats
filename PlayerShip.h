@@ -16,5 +16,8 @@ private:
 	float _velocity; //-- list ++ right
 	float _maxVelocity;
 	float _angle; //0 is up
+	int _maxMoves;
+	float _turningspeed;
+	
 
 };
