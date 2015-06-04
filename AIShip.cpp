@@ -7,7 +7,9 @@
 AIShip::AIShip() : 
 _velocity(100.0f),
 _maxVelocity(600.0f),
-_angle(0.0f)
+_angle(0.0f),
+_maxMoves(6),
+_turningspeed(22.5)
 {
 	Load(AI_ship_image);
 	assert(IsLoaded());
@@ -38,7 +40,7 @@ void AIShip::Update(float elapsedTime)
 //	printf("elapsed Time is %f \n", elapsedTime);
 	float moveAmount = _velocity * elapsedTime;
 //	printf("moveAmount is %f \n", moveAmount);
-
+	if(_moves <_maxMoves){
 	std::vector<std::string> vector = Game::GetGameObjectManager().getGameObjectNames();
 
 	for (std::vector<std::string>::iterator itr = vector.begin(); itr != vector.end(); ++itr)
@@ -110,23 +112,34 @@ void AIShip::Update(float elapsedTime)
 			//ideal_rotate_angle= angle_to_player+_angle;
 			//}
 
-
-			if (ideal_rotate_angle > (desired_turning_speed_per_second*elapsedTime))
+			printf("ideal rotate angle to player is %f \n", ideal_rotate_angle);
+			if (ideal_rotate_angle > 30.f)
 			{
-				rotate_angle = (desired_turning_speed_per_second*elapsedTime);
+				printf("triggered for > 30 \n");
+				_angle += _turningspeed;
+				GetSprite().Rotate(-_turningspeed);
+				_moves++;
+				Sleep(500);
 			}
-			else if (ideal_rotate_angle < -(desired_turning_speed_per_second*elapsedTime))
+			else if (ideal_rotate_angle < -30.f)
 			{
-				rotate_angle = -(desired_turning_speed_per_second*elapsedTime);
+				printf("triggered for < 30 \n ");
+				_angle -= _turningspeed;
+				GetSprite().Rotate(_turningspeed);
+				_moves++;
+				Sleep(500);
 			}
 			else {
-				rotate_angle = ideal_rotate_angle;
+				moveAmount =30.0f;
+				_moves++;
+				Sleep(500);
 			}
 
-			angle_to_fly = _angle + rotate_angle;
+			if(_angle > 360.f) _angle -= 360.0f;
+			if(_angle < 0) _angle += 360.0f;
 
-			float linVelX = LinearVelocityX(angle_to_fly);
-			float linVelY = LinearVelocityY(angle_to_fly);
+			float linVelX = LinearVelocityX(_angle);
+			float linVelY = LinearVelocityY(_angle);
 
 			moveByX = linVelX * moveAmount ;
 			moveByY = linVelY * moveAmount ;
@@ -136,17 +149,34 @@ void AIShip::Update(float elapsedTime)
 				SetPosition(starting_AI_loc);
 				printf(" got you ");
 			}
-			//printf("angle is %f \n", _angle);
-			//rotate angle is inverse to all other angles
-			GetSprite().Rotate(-rotate_angle);
 
-			_angle=angle_to_fly;
+					//collide with side of screen
+			if(GetPosition().x + moveByX <= 0 +GetWidth()/2 + edge_gap|| 
+				GetPosition().x + GetWidth()/2 + moveByX >= Game::window_x_resolution - edge_gap) 
+			{
+				//_angle = 360.0f -_angle;
+				//if(_angle > 260.0f && _angle < 280.0f) _angle += 20.f;
+				//if(_angle > 80.0f && _angle < 100.0f) _angle += 20.f;
+				_velocity = 0;
+				moveByX = -moveByX;
+			}
+
+			if(GetPosition().y - GetHeight()/2 + moveByY <=0 +edge_gap||
+				GetPosition().y + GetHeight()/2 + moveByY >= Game::window_y_resolution - edge_gap)
+			{
+				//_angle = 180- _angle;
+				_velocity = 0;
+				moveByY = -moveByY;
+			}
+
 
 		}
 	}
-
+	
 	
 	GetSprite().Move(moveByX, moveByY);
-	
+
+
+	}
 	
 }

@@ -32,7 +32,6 @@ float PlayerShip::GetVelocity() const
 }
 void PlayerShip::Update(float elapsedTime)
 {
-	printf("moves made is %i",_moves);
 	int turn = 0;
 	float moveAmount = 0;
 
@@ -70,6 +69,7 @@ void PlayerShip::Update(float elapsedTime)
 	//if(_velocity < 0)
 	//	_velocity = 0;
 	if(_angle > 360.f) _angle -= 360.0f;
+	if(_angle < 0) _angle += 360.0f;
 
 	sf::Vector2f pos = this->GetPosition();
 
